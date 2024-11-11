@@ -1,0 +1,131 @@
+{   
+    "model" : {
+
+        "if_duplicate_high_pos_grad" : true,
+        "dup_threshold_type" : "absolute",
+        "dup_threshold_value" : 0.5,
+        "dup_factor" : 3,
+        "dup_high_pos_grads_at_epoch" : [40,50,60,70,80,90,100,110,120,130,140,150,160,210,220,350,375],
+
+        "if_cull_low_opacity" : true,
+        "cull_opacity_type" : "absolute",
+        "cull_opacity_value" : 0.05,
+        "cull_opacity_at_epoch" : [125, 310],
+
+        "if_cull_wayward" : false,
+        "cull_wayward_method" : "mean_distance",
+        "cull_wayward_num_neighbors" : 15,
+        "cull_wayward_threshold_type" : "percentile_top",
+        "cull_wayward_threshold_value" : 0.02,
+        "cull_wayward_at_epoch" : [76, 106, 146, 176, 191, 211, 221],
+
+        "if_cull_gaussians_not_projecting" : true,
+        "cull_gaussians_not_projecting_at_epoch" : [145, 175, 190],
+        "cull_gaussians_not_projecting_threshold" : 0.1,
+
+        "init_random_init" : true,
+        "init_min_num_gaussians" : 2500,
+        "random_init_box_center" : 0.5,
+        "random_init_box_size" : 1.1,
+        "init_dup_rand_noise_scale" : 0.05,
+        "init_edge_detection_threshold" : 0.2,
+        "init_scales_type": "constant",
+        "init_scales_val" : 0.004,
+        "init_opacity_type" : "constant",
+        "init_opacity_val" : 0.08,
+        
+        "if reset_opacity" : false,
+        "reset_opacity_at_epoch" : [100],
+        "reset_opacity_value" : 0.08
+    },
+
+    "training" : {
+        "num_epochs" : 400,
+        "weights_update_freq" : 25,
+        "optim" : {
+            "means": {
+                "type": "step",
+                "start_lr": 2e-3,
+                "milestones": [10,20,30,40,50],
+                "gamma": 0.75
+            },
+            "scales" : {
+                "type": "start_at",
+                "start_lr": 1e-4,
+                "start_at_epoch": 30
+            },
+            "opacities" : {
+                "type": "start_at",
+                "start_lr": 0.03,
+                "start_at_epoch": 20
+            },
+            "quats" : {
+                "type": "start_at",
+                "start_lr": 1e-3,
+                "start_at_epoch": 30
+            }
+        },
+        "loss" : {
+            "orientation_losses" : {
+                "start_dir_loss_at_epoch": 250,
+                "start_ratio_loss_at_epoch" : 100,
+                "dir_loss_num_nn" : 5,
+                "dir_loss_enforce_method": "enforce_full",
+                "lambda_dir_loss": "scale_to_projection_loss",
+                "lambda_ratio_loss": "scale_to_projection_loss",
+                "dir_loss_scale_factor" : 0.01,
+                "ratio_loss_scale_factor" : 0.01
+            },
+            "projection_losses" : {
+                "loss_type": "l1",
+                "start_at_epoch": 0,
+                "lambda_annealing" : "constant",
+                "lambda_start" : 1,
+                "lambda_end" : 1,
+                "loss_before_alternating" : "whole",
+                "less_freq_loss" : "bg_edge_ratio",
+                "more_freq_loss" : "whole",
+                "start_alternating_at_epoch": 50,
+                "bg_edge_pixel_ratio_annealing" : "constant",
+                "bg_edge_pixel_ratio_start" : 1,
+                "bg_edge_pixel_ratio_end" : 1,
+                "sampling_whole_num_epochs_ratio" : 5
+            }
+        }
+    },
+    "data" : {
+        "parser_type": "emap",
+        "dataset_name" : "ABC",
+        "base_dir" : "data/ABC-NEF_Edge/data/",
+        "edge_detection_method" : "DexiNed",
+        "new_extension" : "",
+        "image_res_scaling_factor" : 1,
+        "scale_scene_unit" : false
+    },
+    "output" : {
+        "output_dir" : "output/ABC/",
+        "checkpoint_dir" : "output/ABC/checkpoints/",
+        "export_ply": true,
+        "log_dir" : "logs/ABC/",
+        "checkpoint_interval" : 5,
+        "log_interval" : 1,
+        "exp_name" : "release"
+    },
+    "filtering":
+    {
+        "filter_by_opacity": true,
+        "filter_opacity_min": 0.2,
+        "filter_stat_outliers": true,
+        "filter_stat_outlier_num_nn": 25,
+        "filter_stat_outlier_std_mult": 2,
+        "filter_by_projection": true,
+        "filter_visib_thresh": 0.15
+    },
+    "parametric_fitting":
+    {
+        "angle_thresh" : 0.8,
+        "line_ransac_thresh" : 0.005,
+        "line_curve_residual_comp_factor" : 0.4,
+        "min_cluster_size" : 10
+    }
+}
