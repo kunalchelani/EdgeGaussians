@@ -44,9 +44,9 @@ Assuming the data is structured as done by EMAP, you can use the following comma
 
 ```python train_gaussians.py --config_file <config_file_path> --scene_name <scene_name>```
 
-For example, first set the appropriate path to data in the ```configs/ABC_DexiNed.json``` file. If you have the data copied in a directory named <i>data</i> in the root directory of this project, you can use the config as is. To then train the model on scan 00004296 from ABC-NEF dataset (as an example), run the following command:
+For example, first set the appropriate path to data in the ```configs/ABC_DexiNed.json``` file. If you have the data copied in a directory named <i>data</i> in the root directory of this project, you can use the config as is. To then train the model on scan 00004926 from ABC-NEF dataset (as an example), run the following command:
 
-```python train_gaussians.py --config_file configs/ABC_DexiNed.json --scene_name 00004296```
+```python train_gaussians.py --config_file configs/ABC_DexiNed.json --scene_name 00004926```
 
 
 ## Edge Extraction
@@ -56,7 +56,7 @@ Once the Gaussians are trained, you can extract the edges using the following co
 
 Going with the above example, use the following command to additionally save filtered Gaussians and points sampled at 5mm resolution along the fit parametric curves.
 
-```python fit_edges.py --config_file configs/ABC_DexiNed.json --scene_name 00004296 --save_filterd --save_sampled_points```
+```python fit_edges.py --config_file configs/ABC_DexiNed.json --scene_name 00004926 --save_filtered --save_sampled_points```
 
 ## Visualizing the results
 1. The filtered Gaussians along with their major directions can be visualized using the following:
@@ -65,7 +65,7 @@ Going with the above example, use the following command to additionally save fil
 
 If the above commands have executed successfully and the output files are in a directory named <i>output</i> in the root directory of the project, running the following should open an open3d visuailzer with Gaussian means as points and lines drawn through them in the direction of their major axes:
 
-```python visualize_points_with_major_dirs.py --input_ply output/ABC/release_DexiNed/00004296/pts_with_major_dirs.ply ```
+```python visualize_points_with_major_dirs.py --input_ply output/ABC/release_DexiNed/00004926/pts_with_major_dirs.ply ```
 
 Note that these are the Gaussians, before fitting of edges
 

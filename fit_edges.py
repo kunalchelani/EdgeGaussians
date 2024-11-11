@@ -8,7 +8,9 @@ import open3d as o3d
 import edgegaussians.edge_extraction.fitting as fitting
 import edgegaussians.edge_extraction.clustering as clustering
 import edgegaussians.edge_extraction.filtering as filtering
-import edgegaussians.utils.train_utils as train_utils
+
+import edgegaussians.utils.parse_utils as parse_utils
+import edgegaussians.utils.data_utils as data_utils
 import edgegaussians.utils.io_utils as io_utils
 import edgegaussians.utils.misc_utils as misc_utils
 import edgegaussians.utils.eval_utils as eval_utils
@@ -26,18 +28,15 @@ def filter_points(pos, scales, quats, opacities, filtering_conf, data_config, sc
         pos = pos[inlier_inds_]; scales = scales[inlier_inds_]; quats = quats[inlier_inds_]; opacities = opacities[inlier_inds_]
     
     if filtering_conf['filter_by_projection']:
-        dataparser, images_dir, _ = train_utils.parse_data(data_config, scene_name)
+        dataparser, images_dir, _ = parse_utils.parse_data(data_config, scene_name)
         parser_type = data_config["parser_type"]
         image_res_scaling_factor = data_config["image_res_scaling_factor"]
-        if_scale_scene_unit = data_config["scale_scene_unit"]
 
         # This needs to change if the scene is being scaled, right now it is assumed to be not be scaled
-        _ = train_utils.init_views_and_get_scale(dataparser, 
+        data_utils.init_views(dataparser, 
                                 images_dir, 
                                 parser_type = parser_type,
-                                image_res_scaling_factor = image_res_scaling_factor,
-                                if_scale_scene_unit = False,
-                                points_extent = None)
+                                image_res_scaling_factor = image_res_scaling_factor)
         
         edges, cameras = filtering.load_images_and_cameras(dataparser)
         inlier_inds_ = filtering.filter_by_projection(pos, edges, cameras)

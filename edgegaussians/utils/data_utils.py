@@ -9,9 +9,9 @@ from scipy.spatial.distance import cdist
 
 
 def init_views(dataparser, 
-                             images_dir, 
-                             parser_type:str = 'emap',
-                             image_res_scaling_factor:float = 1.0):
+                images_dir, 
+                parser_type:str = 'emap',
+                image_res_scaling_factor:float = 1.0):
     
     if parser_type == "colmap":
         if image_res_scaling_factor is not None:
