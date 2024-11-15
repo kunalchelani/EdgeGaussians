@@ -165,16 +165,14 @@ def main(metrics_pr):
         print(f"{key}: {mean_val}")
     
     if write_metrics:
-        write_metrics_dir = args.write_metrics_dir
+        write_metrics_dir = os.path.join(args.write_metrics_dir, version, edge_detector)
         if not os.path.exists(write_metrics_dir):
             os.makedirs(write_metrics_dir)
-            
-        save_prefix = f"{version}_{edge_detector}"
 
-        with open(os.path.join(write_metrics_dir, "save_prefix", "pr.pkl"), "wb") as f:
+        with open(os.path.join(write_metrics_dir, "pr.pkl"), "wb") as f:
             pickle.dump(metrics_pr, f)
         
-        with open(os.path.join(write_metrics_dir, "save_prefix", "acc_comp_chamfer.pkl"), "wb") as f:
+        with open(os.path.join(write_metrics_dir, "acc_comp_chamfer.pkl"), "wb") as f:
             pickle.dump(metrics, f)
 
 if __name__ == "__main__":
