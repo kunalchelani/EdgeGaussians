@@ -36,8 +36,10 @@ conda activate edgegaussians
 ```
 
 ## Datasets
-For evaluation, we use the EMAP-NEF dataset and selected scenes from the DTU dataset.
+For quantitiive evaluation, we use the EMAP-NEF dataset and selected scenes from the DTU dataset.
 Since we use the data as formated by EMAP, you can download it using the instructions mentioned on [EMAP's repository](https://github.com/cvg/EMAP): 
+
+Additionally, Replica dataset (as provided by EMAP with the additional colmap triangulated points) can be downloaded from [here](https://drive.google.com/drive/folders/1mERDUl-UeJzFDfjUOUHqQBuk9xVSl4PG?usp=sharing).
 
 ## Training
 Assuming the data is structured as done by EMAP, you can use the following command to train EdgeGaussians on a scene:
