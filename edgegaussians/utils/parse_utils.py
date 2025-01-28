@@ -28,7 +28,7 @@ def get_paths_from_data_config(data_config, scene_name):
         data_dir = Path(base_dir) / scene_name  
         cameras_path = data_dir / "meta_data.json"
         images_dir = data_dir /  f"edge_{edge_detection_method}"
-        if data_config["dataset_name"] == "ABC":
+        if data_config["dataset_name"] in ["ABC", "Replica", "tnt"]:
             seed_points_ply_path = data_dir / "colmap/sparse/sparse.ply"
         elif data_config["dataset_name"] == "DTU":
             seed_points_ply_path = data_dir / "sparse_sfm_points.txt"
