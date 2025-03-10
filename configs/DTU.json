@@ -3,7 +3,7 @@
 
         "if_duplicate_high_pos_grad" : true,
         "dup_threshold_type" : "absolute",
-        "dup_threshold_value" : 0.4,
+        "dup_threshold_value" : 0.45,
         "dup_factor" : 3,
         "dup_high_pos_grads_at_epoch" : [40,50,60,70,80,90,100,110,120,130,140,150,160,210,220,240,350,375,410,440,470],
 
@@ -67,14 +67,14 @@
         },
         "loss" : {
             "orientation_losses" : {
-                "start_dir_loss_at_epoch": 300,
-                "start_ratio_loss_at_epoch" : 100,
-                "dir_loss_num_nn" : 8,
+                "start_dir_loss_at_epoch": 400,
+                "start_ratio_loss_at_epoch" : 400,
+                "dir_loss_num_nn" : 5,
                 "dir_loss_enforce_method": "enforce_full",
                 "lambda_dir_loss": "scale_to_projection_loss",
                 "lambda_ratio_loss": "scale_to_projection_loss",
-                "dir_loss_scale_factor" : 0.2,
-                "ratio_loss_scale_factor" : 0.25
+                "dir_loss_scale_factor" : 0.01,
+                "ratio_loss_scale_factor" : 0.01
             },
             "projection_losses" : {
                 "loss_type": "l1",
@@ -96,7 +96,7 @@
     "data" : {
         "parser_type": "emap",
         "dataset_name" : "DTU",
-        "base_dir" : "data/DTU_Edge/data/",
+        "base_dir" : "/local/kunal/lines_localize/wireframe/EdgeSplatting/data/DTU_Edge/data/",
         "edge_detection_method" : "PidiNet",
         "new_extension" : "",
         "image_res_scaling_factor" : 1,
@@ -117,16 +117,16 @@
         "filter_opacity_min": 0.01,
         "filter_stat_outliers": true,
         "filter_stat_outlier_num_nn": 25,
-        "filter_stat_outlier_std_mult": 3,
-        "filter_by_projection": false,
-        "filter_visib_thresh": 0.05
+        "filter_stat_outlier_std_mult": 1,
+        "filter_by_projection": true,
+        "filter_visib_thresh": 0.02
     },
     "parametric_fitting":
     {
         "_comment_" : "small threshold for angle and high comp factor as mostly curves in DTU",
-        "angle_thresh" : 0.5,
+        "angle_thresh" : 0.6,
         "line_ransac_thresh" : 0.001,
         "line_curve_residual_comp_factor" : 1.0,
-        "min_cluster_size" : 3
+        "min_cluster_size" : 4
     }
 }
